@@ -7,61 +7,46 @@
 @rem ****************************************************************************
 
 @rem Set local scope for the variables with windows NT shell
-if "%OS%"=="Windows_NT" setlocal
+if "%OS%"=="Windows_NT" setlocal enabledelayedexpansion
 
 @rem Set the directory name of the current script
-if "%~dp0" == "" set DIRNAME=.
-set DIRNAME=%~dp0
+set "DIRNAME=%~dp0"
 
 @rem Set the base name of the current script
-set APP_BASE_NAME=%~n0
-set APP_HOME=%DIRNAME%
+set "APP_BASE_NAME=%~n0"
+set "APP_HOME=%DIRNAME%"
 
 @rem Resolve any "." and ".." in APP_HOME to make it shorter.
-for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
+for %%I in ("!APP_HOME!") do set "APP_HOME=%%~fI"
 
 @rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
-set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
+set "DEFAULT_JVM_OPTS=-Xmx64m -Xms64m"
 
 @rem Find java.exe
-if defined JAVA_HOME goto findJavaFromJavaHome
+if defined JAVA_HOME (
+    set "JAVA_HOME=%JAVA_HOME:"=%"
+    set "JAVA_EXE=%JAVA_HOME%/bin/java.exe"
+) else (
+    set "JAVA_EXE=java.exe"
+)
 
-set JAVA_EXE=java.exe
-%JAVA_EXE% -version >NUL 2>&1
-if "%ERRORLEVEL%" == "0" goto execute
+if not exist "!JAVA_EXE!" (
+    echo.
+    echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+    echo.
+    echo Please set the JAVA_HOME variable in your environment to match the
+    echo location of your Java installation.
+    goto :fail
+)
 
-echo.
-echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
-echo.
-echo Please set the JAVA_HOME variable in your environment to match the
-echo location of your Java installation.
-
-goto fail
-
-:findJavaFromJavaHome
-set JAVA_HOME=%JAVA_EXE:"=%
-set JAVA_EXE=%JAVA_HOME%/bin/java.exe
-
-if exist "%JAVA_EXE%" goto execute
-
-echo.
-echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
-echo.
-echo Please set the JAVA_HOME variable in your environment to match the
-echo location of your Java installation.
-
-goto fail
-
-:execute
 @rem Setup the command line
-
-set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
+set "CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar"
 
 @rem Execute Gradle
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "!CLASSPATH!" org.gradle.wrapper.GradleWrapperMain %*
 
 @rem End local scope for the variables with windows NT shell
-if "%ERRORLEVEL%"=="0" goto mainEnd
+if "%ERRORLEVEL%"=="0" goto :mainEnd
 
 :fail
 rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
