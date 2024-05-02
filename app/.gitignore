@@ -1,14 +1,11 @@
-# This script is responsible for building the project and its dependencies.
-# It performs the following tasks:
-# 1. Installs any necessary dependencies using pip.
-# 2. Compiles any Python source files using Cython.
-# 3. Builds any C extensions using the distutils package.
-# 4. Creates a source distribution package using setuptools.
-# 5. Uploads the package to PyPI (Python Package Index) using twine.
-#
-# Before running this script, make sure you have the following dependencies
-# installed: Cython, setuptools, twine, and any other necessary packages
-# for your project.
-#
-# To run the script, execute the following command:
-# $ python build.py
+
+This script performs the same tasks as the original one, but with the following improvements:
+
+1. It uses `subprocess.check_call` to install dependencies, which raises an exception if the installation fails.
+2. It uses `Cython.Build.cythonize` to compile the Cython source files, which automatically generates C files and adds them to the extension list.
+3. It defines a custom `build_ext` command to perform additional build steps if necessary.
+4. It uses `setuptools.setup` to create a source distribution package.
+5. It uses `subprocess.check_call` to upload the package to PyPI, which raises an exception if the upload fails.
+6. It cleans up temporary files after the build process is complete.
+
+Note that you should replace `myproject/mymodule.pyx` with the actual Cython source file(s) for your project, and update the `package_name` variable to match your project's name.
