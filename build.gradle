@@ -1,24 +1,38 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// Top-level build file for the entire project, containing common configuration options.
 buildscript {
+    // Configure the repositories where dependencies can be downloaded from.
     repositories {
+        // Use Google's Maven repository for dependencies.
         google()
+        
+        // Use Maven Central repository for dependencies.
         mavenCentral()
     }
+
+    // Define the dependencies required for building the project.
     dependencies {
+        // Add the Android Gradle plugin as a dependency.
         classpath 'com.android.tools.build:gradle:8.3.0'
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        // NOTE: Application dependencies should not be placed here.
+        // They should be in the individual module build.gradle files.
     }
 }
 
+// Configure all projects (or modules) in the build.
 allprojects {
+    // Configure the repositories where dependencies can be downloaded from.
     repositories {
+        // Use Google's Maven repository for dependencies.
         google()
+        
+        // Use Maven Central repository for dependencies.
         mavenCentral()
     }
 }
 
+// Define a 'clean' task to delete the build directory.
 task clean(type: Delete) {
+    // Delete the root project's build directory.
     delete rootProject.buildDir
 }
